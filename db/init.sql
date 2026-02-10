@@ -9,7 +9,9 @@ CREATE TABLE IF NOT EXISTS users (
     phone VARCHAR(20) NOT NULL,
     birth_date DATE,
     weight DECIMAL(5,2),        
-    height DECIMAL(4,2),      
+    height DECIMAL(4,2),
+    role VARCHAR(20) NOT NULL,
+    image_url VARCHAR(255),      
     is_active TINYINT(1) DEFAULT 1
 );
 
@@ -17,7 +19,7 @@ CREATE TABLE IF NOT EXISTS modalities (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
     description VARCHAR(100),
-    imagen_url VARCHAR(255),
+    image_url VARCHAR(255),
     category VARCHAR(50) NOT NULL
 );
 
