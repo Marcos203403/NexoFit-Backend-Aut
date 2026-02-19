@@ -1,15 +1,34 @@
 {
-    "name": "users-api",
-    "scripts": {
-        "start": "node src/app.js"
-    },
-    "dependencies": {
-        "cors": "^2.8.5",
-        "express": "^5.1.0",
-        "js-yaml": "^4.1.1",
-        "knex": "^3.1.0",
-        "mysql2": "^3.16.3",
-        "sqlite3": "^5.1.7",
-        "yargs": "^18.0.0"
-    }
+  "name": "nexofit-backend",
+  "version": "1.0.0",
+  "description": "Backend API para NexoFit - Sistema de gestión de clases fitness",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fitness",
+    "gym",
+    "booking",
+    "api"
+  ],
+  "author": "NexoFit Team",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "express-validator": "^7.3.1",
+    "js-yaml": "^4.1.1",
+    "jsonwebtoken": "^9.0.3",
+    "knex": "^3.1.0",
+    "mysql2": "^3.16.3",
+    "sqlite3": "^5.1.7",
+    "yargs": "^18.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
 }
