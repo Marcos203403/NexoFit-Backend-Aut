@@ -46,12 +46,7 @@ async function getClassById(req, res) {
 async function createClass(req, res) {
     try {
         const { modalityId, instructorId, startTime, endTime, capacity } = req.body;
-
-        // Validación: Comprobar que no se envíen campos vacíos
-        if (!modalityId || !instructorId || !startTime || !endTime || !capacity) {
-            return res.status(400).json({ error: 'Faltan campos obligatorios por rellenar' });
-        }
-
+    
         // Validación de negocio: Evitar solapamiento de clases para el mismo instructor
         const classConflict = await classService.findClassByInstructorAndTime(instructorId, startTime);
         if (classConflict) {
@@ -73,12 +68,7 @@ async function createClass(req, res) {
 async function updateClass(req, res) {
     try {
         const { modalityId, instructorId, startTime, endTime, capacity } = req.body;
-        
-        // Validación: Comprobar que no se envíen campos vacíos
-        if (!modalityId || !instructorId || !startTime || !endTime || !capacity) {
-            return res.status(400).json({ error: 'Faltan campos obligatorios para actualizar' });
-        }
-
+    
         const updatedClass = await classService.modifyClass(req.params.id, modalityId, instructorId, startTime, endTime, capacity);
         res.status(200).json(updatedClass);
     } catch (error) {
