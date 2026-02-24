@@ -3,7 +3,7 @@
  * @module validators/category.validator
  */
 
-const { body, validationResult } = require('express-validator');
+const { body } = require('express-validator');
 
 const validateCategoryData = [
     body('title')
@@ -20,23 +20,13 @@ const validateCategoryData = [
         .notEmpty()
         .withMessage('El slug es obligatorio y no puede estar vacío')
         .matches(/^[a-z0-9-]+$/)
-        .withMessage('El slug solo puede contener letras minúsculas, números y guiones (-)'), // ¡Toque pro para URLs!
+        .withMessage('El slug solo puede contener letras minúsculas, números y guiones (-)'),
 
     body('description')
         .optional()
         .isString()
         .withMessage('La descripción debe ser texto')
-        .trim(),
-
-    /*(req, res, next) => {
-        const errors = validationResult(req);
-        
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ error: errors.array()[0].msg });
-        }
-        
-        next();
-    }*/
+        .trim()
 ];
 
 module.exports = {
