@@ -31,13 +31,11 @@ async function createBooking(req, res) {
     try {
         const { userId, classId } = req.body;
     
-        // 1. Evitar que un usuario reserve la misma clase dos veces (Regla UNIQUE)
         const bookingConflict = await bookingService.findBookingByUserAndClass(userId, classId);
         if (bookingConflict) {
             return res.status(400).json({ error: 'El usuario ya tiene una reserva para esta clase' });
         }
 
-        // 2. Control de Aforo (Capacidad máxima de la clase)
         const classData = await classService.findClass(classId);
         if (!classData) {
             return res.status(404).json({ error: 'La clase que intentas reservar no existe' });
@@ -48,7 +46,6 @@ async function createBooking(req, res) {
             return res.status(400).json({ error: 'Lo sentimos, la clase ya está llena' });
         }
 
-        // 3. Crear la reserva si todo está OK
         const newBooking = await bookingService.addBooking(userId, classId);
         res.status(201).json(newBooking); // 201 Created es mejor práctica para un POST
     } catch (error) {
