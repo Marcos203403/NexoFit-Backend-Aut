@@ -1,4 +1,4 @@
-export function getMaxAge(maxAge) {
+function getMaxAge(value) {
   const birthDate = new Date(value);
   const today = new Date();
   const age = today.getFullYear() - birthDate.getFullYear();
@@ -7,3 +7,5 @@ export function getMaxAge(maxAge) {
   }
   return true;
 }
+
+module.exports = { getMaxAge };
