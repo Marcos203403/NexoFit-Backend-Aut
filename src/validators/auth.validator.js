@@ -1,4 +1,5 @@
 const { body, param } = require("express-validator");
+import { getMaxAge } from "../utils/maxage.utils.js";
 
 /**
  * Validadores de autenticación
@@ -137,15 +138,7 @@ const updateProfileValidation = [
     .optional()
     .isISO8601()
     .withMessage("Fecha de nacimiento inválida (formato: YYYY-MM-DD)")
-    .custom((value) => {
-      const birthDate = new Date(value);
-      const today = new Date();
-      const age = today.getFullYear() - birthDate.getFullYear();
-      if (age < 13 || age > 120) {
-        throw new Error("Debes tener entre 13 y 120 años");
-      }
-      return true;
-    }),
+    .custom(getMaxAge),
 
   body("weight")
     .optional()
