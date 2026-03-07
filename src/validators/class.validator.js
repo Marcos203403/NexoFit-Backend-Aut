@@ -1,4 +1,4 @@
-import { CheckValidDate } from "../utils/checkvaliddate.utils";
+const { CheckValidDate } = require("../utils/checkvaliddate.utils");
 /**
  * @file Middleware de validación para los datos de las clases.
  * @module validators/class.validator
