@@ -13,30 +13,36 @@ const { handleValidationErrors } = require('../middlewares/errorHandler');
 
 // Obtener todas las categorías
 // GET: http://localhost:8080/categories
-router.get('/', categoryController.getAllCategories);
+router.get("/", categoryController.getAllCategories);
+
+// Obtener todas las categorías con sus primeras 3 modalidades
+// GET: http://localhost:8080/categories/with-modalities
+router.get("/with-modalities", categoryController.getCategoriesWithModalities);
 
 // Obtener una categoría específica por su ID
 // GET: http://localhost:8080/categories/:id
-router.get('/:id', categoryController.getCategoryById);
+router.get("/:id", categoryController.getCategoryById);
 
 // Crear una nueva categoría
 // POST: http://localhost:8080/categories
-router.post('/', 
-    categoryValidator.validateCategoryData, 
-    handleValidationErrors,                 
-    categoryController.createCategory       
+router.post(
+  "/",
+  categoryValidator.validateCategoryData,
+  handleValidationErrors,
+  categoryController.createCategory,
 );
 
 // Actualizar una categoría existente
 // PUT: http://localhost:8080/categories/:id
-router.put('/:id', 
-    categoryValidator.validateCategoryData, 
-    handleValidationErrors,                 
-    categoryController.updateCategory       
+router.put(
+  "/:id",
+  categoryValidator.validateCategoryData,
+  handleValidationErrors,
+  categoryController.updateCategory,
 );
 
 // Eliminar una categoría
 // DELETE: http://localhost:8080/categories/:id
-router.delete('/:id', categoryController.deleteCategory);
+router.delete("/:id", categoryController.deleteCategory);
 
 module.exports = router;

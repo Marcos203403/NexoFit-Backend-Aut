@@ -46,21 +46,17 @@ async function createModality(req, res) {
       image_url,
       category_id,
     );
-    res
-      .status(201)
-      .json({
-        success: true,
-        message: "Modalidad creada con éxito",
-        data: newModality,
-      });
+    res.status(201).json({
+      success: true,
+      message: "Modalidad creada con éxito",
+      data: newModality,
+    });
   } catch (error) {
     console.error("Error en createModality:", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Error al guardar la modalidad en la base de datos",
-      });
+    res.status(500).json({
+      success: false,
+      message: "Error al guardar la modalidad en la base de datos",
+    });
   }
 }
 
@@ -72,12 +68,10 @@ async function updateModality(req, res) {
       req.params.id,
     );
     if (!existingModality) {
-      return res
-        .status(404)
-        .json({
-          success: false,
-          message: "La modalidad que intentas actualizar no existe",
-        });
+      return res.status(404).json({
+        success: false,
+        message: "La modalidad que intentas actualizar no existe",
+      });
     }
 
     const updatedModality = await modalityService.modifyModality(
@@ -87,13 +81,11 @@ async function updateModality(req, res) {
       image_url,
       category_id,
     );
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Modalidad actualizada correctamente",
-        data: updatedModality,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Modalidad actualizada correctamente",
+      data: updatedModality,
+    });
   } catch (error) {
     console.error("Error en updateModality:", error);
     res
@@ -108,12 +100,10 @@ async function deleteModality(req, res) {
       req.params.id,
     );
     if (!existingModality) {
-      return res
-        .status(404)
-        .json({
-          success: false,
-          message: "La modalidad que intentas eliminar no existe",
-        });
+      return res.status(404).json({
+        success: false,
+        message: "La modalidad que intentas eliminar no existe",
+      });
     }
 
     await modalityService.removeModality(req.params.id);
@@ -122,12 +112,54 @@ async function deleteModality(req, res) {
       .json({ success: true, message: "Modalidad eliminada definitivamente" });
   } catch (error) {
     console.error("Error en deleteModality:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error al intentar eliminar la modalidad",
+    });
+  }
+}
+
+async function getModalityWithClasses(req, res) {
+  try {
+    const modality = await modalityService.findModalityWithClasses(
+      req.params.id,
+    );
+
+    if (!modality) {
+      return res
+        .status(404)
+        .json({ success: false, message: "La modalidad solicitada no existe" });
+    }
+
+    res.status(200).json({ success: true, data: modality });
+  } catch (error) {
+    console.error("Error en getModalityWithClasses:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error al obtener la modalidad con sus clases",
+    });
+  }
+}
+
+async function searchModalities(req, res) {
+  try {
+    const { q, limit } = req.query;
+
+    if (!q || q.trim() === "") {
+      return res.status(200).json({ success: true, data: [] });
+    }
+
+    const modalities = await modalityService.searchModalities(
+      q.trim(),
+      limit ? parseInt(limit) : 10,
+    );
+
+    res.status(200).json({ success: true, data: modalities });
+  } catch (error) {
+    console.error("Error en searchModalities:", error);
     res
       .status(500)
-      .json({
-        success: false,
-        message: "Error al intentar eliminar la modalidad",
-      });
+      .json({ success: false, message: "Error al buscar modalidades" });
   }
 }
 
@@ -137,4 +169,6 @@ module.exports = {
   createModality,
   updateModality,
   deleteModality,
+  getModalityWithClasses,
+  searchModalities,
 };
