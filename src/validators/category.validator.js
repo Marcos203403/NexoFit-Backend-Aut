@@ -26,7 +26,15 @@ const validateCategoryData = [
         .optional()
         .isString()
         .withMessage('La descripción debe ser texto')
-        .trim()
+        .trim(),
+
+    body('price')
+        .isFloat({ min: 0 })
+        .withMessage('El precio debe ser un número decimal positivo'),
+    
+        
+
+
 ];
 
 module.exports = {

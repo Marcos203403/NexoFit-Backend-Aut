@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS category (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
     description TEXT,
+    price DECIMAL(10,2) NOT NULL DEFAULT 0.00, 
     slug VARCHAR(50) NOT NULL UNIQUE
 );
 
@@ -75,11 +76,11 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `phon
 (9, 'Marcos', 'Mesa', 'cliente@nexofit.com', '$2b$10$gJECd4vaw1LBOimUjvJQI.uTaxJFkARGqGMsf9J3CdqwmHOW.x0dG', '123123123', NULL, NULL, NULL, 'client', 'https://i.imgur.com/14DZX0q.jpeg', 1, '2026-03-09 15:38:49');
 
 -- Categorías
-INSERT INTO `category` (`id`, `title`, `description`, `slug`) VALUES 
-(1, 'Fuerza', 'Entrenamiento de resistencia y musculación', 'fuerza'),
-(2, 'Cardio', 'Ejercicios cardiovasculares y resistencia aeróbica', 'cardio'),
-(3, 'Baile', 'Actividades de baile y ritmo', 'baile'),
-(4, 'Relax', 'Actividades de relajación y bienestar', 'relax');
+INSERT INTO `category` (`id`, `title`, `description`, `slug`, `price`) VALUES 
+(1, 'Fuerza', 'Entrenamiento de resistencia y musculación', 'fuerza', 25.00),
+(2, 'Cardio', 'Ejercicios cardiovasculares y resistencia aeróbica', 'cardio', 20.00),
+(3, 'Baile', 'Actividades de baile y ritmo', 'baile', 15.00),
+(4, 'Relax', 'Actividades de relajación y bienestar', 'relax', 10.00);
 
 -- Modalidades
 INSERT INTO `modalities` (`id`, `title`, `description`, `image_url`, `category_id`) VALUES 

@@ -38,12 +38,13 @@ async function getCategoryById(req, res) {
 
 async function createCategory(req, res) {
   try {
-    const { title, description, slug } = req.body;
+    const { title, description, slug, price } = req.body;
 
     const newCategory = await categoryService.addCategory(
       title,
       description,
       slug,
+      price
     );
     res.status(201).json({
       success: true,
@@ -61,7 +62,7 @@ async function createCategory(req, res) {
 
 async function updateCategory(req, res) {
   try {
-    const { title, description, slug } = req.body;
+    const { title, description, slug, price } = req.body;
 
     const existingCategory = await categoryService.findCategoryById(
       req.params.id,
@@ -78,7 +79,8 @@ async function updateCategory(req, res) {
       title,
       description,
       slug,
-    );
+      price
+    );  
     res.status(200).json({
       success: true,
       message: "Categoría actualizada correctamente",
@@ -93,10 +95,10 @@ async function updateCategory(req, res) {
 }
 
 async function deleteCategory(req, res) {
-  try {
-    const existingCategory = await categoryService.findCategoryById(
+      try {
+        const existingCategory = await categoryService.findCategoryById(
       req.params.id,
-    );
+    );  
     if (!existingCategory) {
       return res.status(404).json({
         success: false,
@@ -130,6 +132,19 @@ async function getCategoriesWithModalities(req, res) {
   }
 }
 
+async function getPriceByCategoryId(req, res) {
+    try {
+      const category = await categoryService.findCategoryById(req.params.id);
+      res.status(200).json({ success: true, data: { price: category.price } });
+    } catch (error) {
+      console.error("Error en getPriceByCategoryId:", error);
+      res.status(500).json({
+        success: false,
+        message: "Error al obtener el precio de la categoría",
+      });
+    }
+  }
+
 module.exports = {
   getAllCategories,
   getCategoryById,
@@ -137,4 +152,6 @@ module.exports = {
   updateCategory,
   deleteCategory,
   getCategoriesWithModalities,
+  getPriceByCategoryId,
+  
 };
