@@ -46,3 +46,7 @@ router.put(
 router.delete("/:id", categoryController.deleteCategory);
 
 module.exports = router;
+
+// Obtener el precio de una categoría por su ID
+// GET: http://localhost:8080/categories/:id/price
+router.get("/:id/price", categoryController.getPriceByCategoryId);  

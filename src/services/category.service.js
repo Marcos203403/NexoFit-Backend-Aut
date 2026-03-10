@@ -31,21 +31,23 @@ async function findCategoryBySlug(slug) {
   return await db("category").where("slug", slug).first();
 }
 
+
 /**
  * Inserta una nueva categoría en la base de datos.
  * @param {string} title - Título de la categoría.
  * @param {string} description - Descripción detallada.
  * @param {string} slug - Identificador único para URLs.
- * @returns {Promise<Object>} El objeto de la categoría recién creada.
+ * @param {number} price - Precio de la categoría.
  */
-async function addCategory(title, description, slug) {
+async function addCategory(title, description, slug, price) {
   const [id] = await db("category").insert({
     title,
     description,
     slug,
+    price,
   });
 
-  return { id, title, description, slug };
+  return { id, title, description, slug, price };
 }
 
 /**
@@ -54,16 +56,18 @@ async function addCategory(title, description, slug) {
  * @param {string} title - Nuevo título.
  * @param {string} description - Nueva descripción.
  * @param {string} slug - Nuevo slug.
+ * @param {number} price - Nuevo precio.
  * @returns {Promise<Object>} El objeto de la categoría actualizada.
  */
-async function modifyCategory(id, title, description, slug) {
+async function modifyCategory(id, title, description, slug, price) {
   await db("category").where("id", id).update({
     title,
     description,
     slug,
+    price
   });
 
-  return { id, title, description, slug };
+  return { id, title, description, slug, price };
 }
 
 /**
@@ -96,6 +100,11 @@ async function findCategoriesWithModalities() {
   return categories;
 }
 
+async function findPriceByCategoryId(id) {
+  const category = await findCategoryById(id);
+  return category ? category.price : null;
+}
+
 module.exports = {
   findAllCategories,
   findCategoryById,
@@ -104,4 +113,6 @@ module.exports = {
   modifyCategory,
   removeCategory,
   findCategoriesWithModalities,
-};
+  findPriceByCategoryId
+}
+

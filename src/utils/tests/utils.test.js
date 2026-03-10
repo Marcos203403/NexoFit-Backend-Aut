@@ -1,6 +1,8 @@
 const { getMaxAge } = require('../maxage.utils');
 const { CheckValidDate } = require('../checkvaliddate.utils');
 const { confirmPassword } = require('../confirmpsw.utils');
+const { describe, it, expect } = require('@jest/globals');
+const { findPriceByCategoryId } = require('../services/category.service');
 
 // ─── getMaxAge ────────────────────────────────────────────────────────────────
 
@@ -68,5 +70,19 @@ describe('confirmPassword', () => {
   it('debe lanzar error si uno de los valores está vacío', () => {
     expect(() => confirmPassword('Secret123!', ''))
       .toThrow('Las contraseñas no coinciden');
+  });
+});
+
+// ─── findPriceByCategoryId ───────────────────────────────────────────────────────────
+
+describe('findPriceByCategoryId', () => {
+  it('debe retornar el precio de una categoría existente', async () => {
+    const price = await findPriceByCategoryId(1);
+    expect(price).toBe(100);
+  });
+
+  it('debe retornar null si la categoría no existe', async () => {
+    const price = await findPriceByCategoryId(999);
+    expect(price).toBeNull();
   });
 });
